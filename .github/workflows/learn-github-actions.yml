@@ -21,7 +21,7 @@ jobs:
       uses: aws-actions/codeguru-reviewer@v1.1
       if: ${{ always() }} 
       with:
-        s3_bucket: codeguru-reviewer-my-bucket2021  # S3 Bucket with "codeguru-reviewer-*" prefix
+        s3_bucket: codeguru-reviewer-my-bucket-us-east-1  # S3 Bucket with "codeguru-reviewer-*" prefix
     
     - name: Upload review result
       if: ${{ github.event_name != 'push' }}
