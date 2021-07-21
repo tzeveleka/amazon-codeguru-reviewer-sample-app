@@ -1,5 +1,5 @@
 name: CodeGuru Reviewer GitHub Actions Integration
-on: [pull_request, push]
+on: [push]
 jobs:
   CodeGuru-Reviewer-Actions:
     runs-on: ubuntu-latest
