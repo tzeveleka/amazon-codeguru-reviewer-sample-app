@@ -4,7 +4,6 @@ jobs:
   CodeGuru-Reviewer-Actions:
     runs-on: ubuntu-latest
     steps:
-	    steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
