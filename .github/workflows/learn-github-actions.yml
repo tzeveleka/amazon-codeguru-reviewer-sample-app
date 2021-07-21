@@ -4,38 +4,10 @@ jobs:
   CodeGuru-Reviewer-Actions:
     runs-on: ubuntu-latest
     steps:
-	    - name: Amazon CodeGuru Reviewer Scanner
-        uses: aws-actions/codeguru-reviewer
-        if: ${{ always() }} 
+	    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
         with:
-          s3_bucket: 'codeguru-reviewer-myactions-bucket2021'  # S3 Bucket starting with "codeguru-reviewer-*"
-      - name: Upload review result
-        if: ${{ always() }}
-        uses: github/codeql-action/upload-sarif@v1
-        with:
-          sarif_file: codeguru-results.sarif.json
-          steps:
-              - name: Checkout repository
-                uses: actions/checkout@v2
-                with:
-                  fetch-depth: 0   # Required
-              - name: Configure AWS Credentials
-                uses: aws-actions/configure-aws-credentials@v1
-                if: ${{ always() }} # This ensures that your workflow runs successfully
-                with:
-                  aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-                  aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-                  aws-region: us-east-1
-
-              - name: AWS CodeGuru Reviewer Scanner
-                uses: aws-actions/codeguru-reviewer@v1.1
-                if: ${{ always() }} 
-                with:
-                 # build_path: target  build artifact(s) directory
-                  s3_bucket: codeguru-reviewer-my-bucket2021  # S3 Bucket with "codeguru-reviewer-*" prefix
-              
-              - name: Upload review result
-                if: ${{ github.event_name != 'push' }}
-                uses: github/codeql-action/upload-sarif@v1
-                with:
-                  sarif_file: codeguru-results.sarif.json
+          node-version: '14'
+      - run: npm install -g bats
+      - run: bats -v
